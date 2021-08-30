@@ -24,7 +24,7 @@ with open('trudeau_all.tsv', newline='') as csvfile:
         my_date = datetime.strptime(date, "%B %d, %Y at %I:%M%p")
         month = str(my_date.month)
         year = str(my_date.year)
-        date_row = month + "-" + year
+        date_row = year + "-" + month
 
         try:
             if detect(tweet) == "en":
