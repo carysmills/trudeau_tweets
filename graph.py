@@ -9,7 +9,7 @@ df = pd.read_csv('trudeau-output.tsv', sep='\t', header=0)
 df['date'] = pd.to_datetime(df['date'])
 df['date'] = df['date'].dt.strftime("%Y-%m")
 
-selected_word = 'jobs'
+selected_word = 'climate'
 filtered = df[df.word.eq(selected_word)]
 reindexed = filtered.set_index('date')
 
@@ -25,10 +25,10 @@ df_total['date'] = df_total['date'].dt.strftime("%Y-%m")
 totals_reindexed = df_total.set_index('date')
 filled_total_vals = totals_reindexed.reindex(index=list(idx.astype(str)))
 
-test = pd.merge(filled_vals, filled_total_vals, left_index=True, right_index=True)
-print(test)
+merged = pd.merge(filled_vals, filled_total_vals, left_index=True, right_index=True)
 
-fig = go.Figure(go.Scatter(x = test.index, y = test['value'], name='Times ' + selected_word + ' tweeted'))
-fig.add_scatter(x=test.index, y=test['total'], name="Total tweets")
+fig = go.Figure(go.Scatter(x = merged.index, y = merged['value'], name='Times "' + selected_word + '" tweeted'))
+fig.add_scatter(x=merged.index, y=merged['total'], name="Total English tweets", line=dict(color='black', width=2))
+fig.update_yaxes(rangemode="tozero")
 
 fig.show()
